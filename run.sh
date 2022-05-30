@@ -11,6 +11,13 @@ RESET="\033[00m"
 banner=http://artscene.textfiles.com/vt100/moon.animation
 banner2=https://cdn.discordapp.com/attachments/951235506363047976/980442284321550386/auxgrep.vt
 
+if [  -e /usr/bin/pv ]; then
+    echo -e $GREEN "[ ✔ ] pv ................[ found ]"
+else 
+	echo -e $RED "[ X ] pv -> not found "
+	echo -e "\n [*] ${YELLOW} Installing pv ${RESET}\n"
+	sudo apt-get install pv
+fi
 
 if [[ $(/usr/bin/id -u) -ne 0 ]]; then
     curl -s $banner|pv -q -L 9600
@@ -67,13 +74,6 @@ else
 	echo -e $RED "[ X ] beef-xss -> not found "
 	echo -e "\n [*] ${YELLOW} Installing beef-xss ${RESET}\n"
 	sudo apt-get install beef-xss
-fi
-if [  -e /usr/bin/pv ]; then
-    echo -e $GREEN "[ ✔ ] pv ................[ found ]"
-else 
-	echo -e $RED "[ X ] pv -> not found "
-	echo -e "\n [*] ${YELLOW} Installing pv ${RESET}\n"
-	sudo apt-get install pv
 fi
 if [  -e /usr/sbin/netdiscover ]; then
     echo -e $GREEN "[ ✔ ] netdiscover ................[ found ]"
