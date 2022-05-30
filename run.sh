@@ -42,7 +42,7 @@ if [  -e /usr/bin/ettercap ]; then
 else 
 	echo -e $RED "[ X ] ettercap -> not found "
 	echo -e "\n [*] ${YELLOW} Installing ettercap ${RESET}\n"
-	sudo apt-get install ettercap-read-only
+	sudo apt-get install ettercap-text-only
 fi
 sleep 2
 if [  -e /usr/bin/mitmproxy ]; then
